@@ -1,0 +1,41 @@
+version: "3.0"
+services:
+  must:
+    build:
+      context: ./must
+    restart: always
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+    depends_on:
+      - influxdb
+  influxdb:
+    image: arm32v7/influxdb
+    restart: always
+    environment:
+      DOCKER_INFLUXDB_INIT_USERNAME: root
+      DOCKER_INFLUXDB_INIT_PASSWORD: root
+      DOCKER_INFLUXDB_INIT_ORG: org
+      DOCKER_INFLUXDB_INIT_BUCKET: bucket
+      DOCKER_INFLUXDB_INIT_RETENTION: 30d
+      INFLUXDB_DB: ups
+    volumes:
+      - "metrics:/var/lib/influxdb"
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3000:3000" # expose for localhost
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana-provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_HTTP_PORT=3000
+    depends_on:
+      - influxdb
+volumes:
+  metrics:
+  grafana-data:
+

@@ -1,0 +1,25 @@
+apiVersion: 1
+
+datasources:
+- name: influx
+  type: influxdb
+  access: proxy
+  url: http://influxdb:8086
+  password: root
+  user: root
+  database: ups
+  basicAuth: false
+  basicAuthUser:
+  basicAuthPassword:
+  withCredentials:
+  isDefault: true
+  uid: "PBDC07BC01591819D"
+  jsonData:
+     tlsAuth: false
+     tlsAuthWithCACert: false
+  secureJsonData:
+    tlsCACert: ""
+    tlsClientCert: ""
+    tlsClientKey: ""
+  version: 1
+  editable: true
