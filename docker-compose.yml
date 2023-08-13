@@ -1,14 +1,23 @@
 version: "3.0"
 services:
-  must:
+  monitor:
     build:
-      context: ./must
+      context: monitor
     restart: always
     devices:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
+    environment:
+      USB_DEVICE: "/dev/ttyUSB0"
+      DB_HOST: influxdb
+      DB_PORT: 8086
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_NAME: ups
+      INVERTER_MODEL: "must-pv1800"
     depends_on:
       - influxdb
   influxdb:
+    # if you have non-arm-v7 architecture, use regular influxdb image
     image: arm32v7/influxdb
     restart: always
     environment:
