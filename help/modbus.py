@@ -1,14 +1,16 @@
 import minimalmodbus
 import sys
 
-registers_from = int(sys.argv[1])
-registers_to = int(sys.argv[2])
+device_id = int(sys.argv[1])
+baud_rate = int(sys.argv[2])
+registers_from = int(sys.argv[3])
+registers_to = int(sys.argv[4])
 
 SERPORT = '/dev/ttyUSB0'
 SERTIMEOUT = 0.5
-SERBAUD = 19200
+SERBAUD = baud_rate
 
-i = minimalmodbus.Instrument(SERPORT, 4)
+i = minimalmodbus.Instrument(SERPORT, device_id)
 i.serial.timeout= SERTIMEOUT
 i.serial.baudrate = SERBAUD
 

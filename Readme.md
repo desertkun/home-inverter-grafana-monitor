@@ -31,6 +31,7 @@ How to use:
 # Supporter Inverters
 
 * MUST PV1800 `must-pv1800`
+* MUST EP3000 `must-ep3000`
 
 # But I have different model
 
@@ -39,9 +40,11 @@ How to use:
    as specified in [monitor.py](monitor/monitor.py) (see offsets, e.g. 25200 + register ids)
 3. Use [help/modbus.py](./help/modbus.py) script to figure out the register values as they work for you
    ```
-   help/modbus.py <register from> <register to>
-   # eg
-   help/modbus.py 25200 25275
+   help/modbus.py <device id> <baud rate> <register from> <register to>
+   # eg, pv1800
+   help/modbus.py 4 19200 25200 25275
+   # ep3000
+   help/modbus.py 10 9600 30000 30025
    ```
 4. Modify [monitor.py](monitor/monitor.py) to support your  `INVERTER_MODEL`, deploy as usual. Change `INVERTER_MODEL` 
    in the [compose file](./docker-compose.yml).

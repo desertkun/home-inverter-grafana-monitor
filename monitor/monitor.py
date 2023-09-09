@@ -44,6 +44,47 @@ if INVERTER_MODEL == "must-pv1800":
     outputW = soc[15]
     tempInt = soc[33]
     state = states[soc[1]]
+elif INVERTER_MODEL == "must-ep3000":
+
+    SELF_CHECK = 0
+    BACKUP = 1
+    LINE = 2
+    STOP = 3
+    DEBUG = 4
+    SOFT_START = 5
+    POWER_OFF = 6
+    STANDBY = 7
+
+    states = {
+        STANDBY: "PowerOn",
+        SELF_CHECK: "SelfTest",
+        BACKUP: "OffGrid",
+        STOP: "Stop",
+        DEBUG: "Debug",
+        SOFT_START: "SoftStart",
+        LINE: "GridCharging",
+        POWER_OFF: "PowerOff",
+    }
+
+    scc = minimalmodbus.Instrument(USB_DEVICE, 10)
+    scc.serial.baudrate = 9600
+    scc.serial.timeout = 0.5
+
+    soc = scc.read_registers(30000, 25)
+
+    batVolts = soc[14] / 10.0
+    inputVolts = soc[5] // 10
+    batAmps = soc[15]
+    if batAmps > 32768:
+        batAmps = batAmps - 65536
+    batAmps //= 10
+    batCharge = 0
+    discharge = 0
+    loadPercent = soc[12]
+    outputVA = soc[7] / 10
+    outputW = float(soc[10])
+    tempInt = soc[18]
+    state = states[soc[2]]
 else:
     print("Unknown model")
     exit(1)
