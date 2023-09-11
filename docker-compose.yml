@@ -16,6 +16,8 @@ services:
       INVERTER_MODEL: "must-pv1800"
     depends_on:
       - influxdb
+    tmpfs:
+      - /var/run
   influxdb:
     # if you have non-arm-v7 architecture, use regular influxdb image
     image: arm32v7/influxdb

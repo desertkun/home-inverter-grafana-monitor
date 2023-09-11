@@ -4,15 +4,25 @@ from dataclasses import dataclass
 
 @dataclass
 class Sample(object):
+    # battery voltage
     bat_volts: int
+    # battery amperage used
     bat_amps: int
+    # battery state of charge
     soc: int
+    # input ac voltage
     ac: int
+    # systa load in percents
     load_percent: int
+    # load voltage
     output_va: int
-    output_w: int
+    # load power
+    output_w: float
+    # inverter temperature
     temp: int
+    # accumulated used power, 100W per
     discharge: int
+    # inverter state
     state: str
 
 
