@@ -6,6 +6,7 @@ RUN pip3 install --no-cache --upgrade pip setuptools minimalmodbus influxdb infl
 RUN mkdir /monitor
 WORKDIR /monitor
 COPY monitor.py /monitor
+COPY ups /monitor/ups
 
 RUN echo "* * * * * python3 /monitor/monitor.py" >> /etc/crontabs/root && crontab -l
 CMD crond -f -l 8
