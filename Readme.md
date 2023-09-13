@@ -32,6 +32,7 @@ How to use:
 
 * MUST PV1800 `must-pv1800`
 * MUST EP3000 `must-ep3000`
+* MUST PH18-5248 `must-ph18-5248`
 
 # But I have different model
 
